@@ -1,17 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-
 const dataBase = require("./utils/database");
 const initModel = require("./models/initModel");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-
-
 
 dataBase
   .authenticate()
@@ -21,11 +19,18 @@ dataBase
   .catch((e) => {
     console.log(e);
   });
-  
+
 initModel();
 
-dataBase.sync()
-.then(() => console.log("Base de datos sync"))
-.catch((error) => console.log(error));
+dataBase
+  .sync()
+  .then(() => console.log("Base de datos sync"))
+  .catch((error) => console.log(error));
 
-const PORT = 8000;
+const PORT = 9000;
+
+app.use(userRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});

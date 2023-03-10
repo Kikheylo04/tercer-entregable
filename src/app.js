@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const dataBase = require("./utils/database");
 const initModel = require("./models/initModel");
 const userRoutes = require("./routes/userRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 const app = express();
 
@@ -30,6 +31,7 @@ dataBase
 const PORT = 9000;
 
 app.use(userRoutes);
+app.use(categoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
